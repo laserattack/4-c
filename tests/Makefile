@@ -1,5 +1,5 @@
 PROGRAM_NAME    = test.out
-SOURCES         = test_arr.c
+SOURCES         = test.c
 OBJECTS         = $(SOURCES:.c=.o)
 PROGRAM_BIN     = $(PROGRAM_NAME)
 
