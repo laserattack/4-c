@@ -1,6 +1,8 @@
 #ifndef C4_ARG_H
 #define C4_ARG_H
 
+#include <stdlib.h>
+
 extern char *c4argv0;
 
 /* use main(int argc, char *argv[]) */
@@ -31,7 +33,7 @@ extern char *c4argv0;
 #define c4argc()        argc_
 
 #define c4eargf(x)  ((argv[0][i_+1] == '\0' && argv[1] == NULL)?      \
-                ((x), abort(), (char *)0) :                           \
+                ((x), exit(1), (char *)0) :                           \
                 (brk_ = 1, (argv[0][i_+1] != '\0')?                   \
                     (&argv[0][i_+1]) :                                \
                     (argc--, argv++, argv[0])))

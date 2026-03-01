@@ -22,7 +22,7 @@ typedef struct {
             h = malloc(sizeof(C4ArrHeader) + C4_ARR_INIT_CAP * sizeof(*arr));  \
             if (!h) {                                                          \
                 fprintf(stderr, "c4arr alloc err\n");                          \
-                abort();                                                       \
+                exit(1);                                                       \
             }                                                                  \
             h->cap = C4_ARR_INIT_CAP;                                          \
             h->len = 0;                                                        \
@@ -35,7 +35,7 @@ typedef struct {
             h = realloc(h, sizeof(C4ArrHeader) + h->cap * sizeof(*arr));       \
             if (!h) {                                                          \
                 fprintf(stderr, "c4arr realloc err\n");                        \
-                abort();                                                       \
+                exit(1);                                                       \
             }                                                                  \
             arr = (void *)h + sizeof(C4ArrHeader);                             \
         }                                                                      \
