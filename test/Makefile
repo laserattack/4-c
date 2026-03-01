@@ -19,4 +19,7 @@ $(PROGRAM_BIN): $(OBJECTS)
 clean:
 	rm -f $(PROGRAM_BIN) $(OBJECTS)
 
-.PHONY: all clean
+valgrind:
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(PROGRAM_BIN)
+
+.PHONY: all clean valgrind

@@ -95,6 +95,25 @@ void test_arg_1() {
 
 // ================ TEST DYNARR ================
 
+void test_arr_shrink() {
+    int *arr = NULL;
+    c4arrpush(arr, 1);
+    c4arrpush(arr, 1);
+    c4arrpush(arr, 1);
+    c4arrpush(arr, 1);
+    c4arrpush(arr, 1);
+
+    assert(c4arrcap(arr) == 8 && "incorrect arr cap");
+    assert(c4arrlen(arr) == 5 && "incorrect arr len");
+
+    c4arrshrink(arr);
+
+    assert(c4arrcap(arr) == 5 && "incorrect arr cap");
+    assert(c4arrlen(arr) == 5 && "incorrect arr len");
+    
+    c4arrfree(arr);
+}
+
 void test_arr_diff_types() {
     int   *arri    = NULL;
     float *arrf    = NULL;
@@ -138,5 +157,6 @@ int main() {
     c4runtest(test_arg_1);
     c4runtest(test_arg_2);
     c4runtest(test_arg_3);
+    c4runtest(test_arr_shrink);
     return 0;
 }

@@ -30,7 +30,7 @@ typedef struct {
         }                                                                      \
         h = c4arrheader(arr);                                                  \
         h->len++;                                                              \
-        if (h->len == h->cap) {                                                \
+        if (h->len > h->cap) {                                                 \
             h->cap *= 2;                                                       \
             h = realloc(h, sizeof(C4ArrHeader) + h->cap * sizeof(*arr));       \
             if (!h) {                                                          \
@@ -40,6 +40,20 @@ typedef struct {
             arr = (void *)h + sizeof(C4ArrHeader);                             \
         }                                                                      \
         arr[h->len-1] = el;                                                    \
+    } while(0)
+
+#define c4arrshrink(arr)                                                       \
+    do {                                                                       \
+        C4ArrHeader *h;                                                        \
+        if (!arr) break;                                                       \
+        h = c4arrheader(arr);                                                  \
+        h->cap = h->len;                                                       \
+        h = realloc(h, sizeof(C4ArrHeader) + h->cap * sizeof(*arr));           \
+        if (!h) {                                                              \
+            fprintf(stderr, "c4arr realloc err\n");                            \
+            exit(1);                                                           \
+        }                                                                      \
+        arr = (void *)h + sizeof(C4ArrHeader);                                 \
     } while(0)
 
 #endif
