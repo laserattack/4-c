@@ -14,7 +14,7 @@ typedef struct {
 #define c4arrheader(arr) (C4ArrHeader *)((void *)(arr) - sizeof(C4ArrHeader))
 #define c4arrlen(arr) (c4arrheader(arr))->len
 #define c4arrcap(arr) (c4arrheader(arr))->cap
-#define c4arrfree(arr) free(c4arrheader(arr))
+#define c4arrfree(arr) ((arr)? free(c4arrheader(arr)): (void)0)
 #define c4arrpush(arr, el)                                                     \
     do {                                                                       \
         C4ArrHeader *h;                                                        \
