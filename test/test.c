@@ -95,6 +95,17 @@ void test_arg_1() {
 
 // ================ TEST DYNARR ================
 
+void test_arr_null() {
+    int *arr = NULL;
+    assert(c4arrlen(arr) == 0);
+    assert(c4arrcap(arr) == 0);
+    assert(c4arrheader(arr) == NULL);
+    c4arrremove(arr, 0);
+    c4arrshrink(arr);
+    c4arrclear(arr);
+    c4arrfree(arr);
+}
+
 void test_arr_remove() {
     int *arr = NULL;
     c4arrpush(arr, 1);
@@ -155,6 +166,12 @@ void test_arr_insert() {
     assert(c4arrlen(arr) == 6 && "incorrect arr len");
     
     c4arrfree(arr);
+
+    c4arrpush(arr, 1);
+    c4arrpush(arr, 2);
+    c4arrinsert(arr, 2, 3);
+    assert(arr[2] == 3);
+    assert(c4arrlen(arr) == 3);
 }
 
 void test_arr_clear_shrink() {
@@ -270,5 +287,6 @@ int main() {
     c4runtest(test_arr_clear_shrink);
     c4runtest(test_arr_insert);
     c4runtest(test_arr_remove);
+    c4runtest(test_arr_null);
     return 0;
 }
