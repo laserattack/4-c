@@ -116,7 +116,7 @@ void test_arr_remove() {
     assert(c4arrcap(arr) == 4 && "incorrect arr cap");
     assert(c4arrlen(arr) == 4 && "incorrect arr len");
     assert(arr[2] == 3);
-    
+
     c4arrremove(arr, 2-2+2);
     assert(arr[2] == 4);
     assert(c4arrcap(arr) == 4 && "incorrect arr cap");
@@ -164,7 +164,7 @@ void test_arr_insert() {
     c4arrinsert(arr, -9999999, 10);
     assert(c4arrcap(arr) == 8 && "incorrect arr cap");
     assert(c4arrlen(arr) == 6 && "incorrect arr len");
-    
+
     c4arrfree(arr);
 
     c4arrpush(arr, 1);
@@ -172,6 +172,8 @@ void test_arr_insert() {
     c4arrinsert(arr, 2, 3);
     assert(arr[2] == 3);
     assert(c4arrlen(arr) == 3);
+
+    c4arrfree(arr);
 }
 
 void test_arr_clear_shrink() {
@@ -183,7 +185,7 @@ void test_arr_clear_shrink() {
         c4arrpush(arr, 1);
         c4arrpush(arr, 1);
         c4arrpush(arr, 1);
-        
+
         assert(c4arrcap(arr) == 8 && "incorrect arr cap");
         assert(c4arrlen(arr) == 5 && "incorrect arr len");
 
@@ -197,7 +199,7 @@ void test_arr_clear_shrink() {
         assert(c4arrcap(arr) == 0 && "incorrect arr cap");
         assert(c4arrlen(arr) == 0 && "incorrect arr len");
     }
-    
+
     c4arrfree(arr);
 }
 
@@ -216,7 +218,7 @@ void test_arr_clear() {
 
     assert(c4arrcap(arr) == 8 && "incorrect arr cap");
     assert(c4arrlen(arr) == 0 && "incorrect arr len");
-    
+
     c4arrfree(arr);
 }
 
@@ -235,7 +237,7 @@ void test_arr_shrink() {
 
     assert(c4arrcap(arr) == 5 && "incorrect arr cap");
     assert(c4arrlen(arr) == 5 && "incorrect arr len");
-    
+
     c4arrfree(arr);
 }
 
