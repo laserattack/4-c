@@ -179,6 +179,23 @@ void test_arr_diff_types() {
     c4arrfree(arrpt);
 }
 
+void test_arr_pop() {
+    int *arr = NULL;
+
+    c4arrpush(arr, 1+2*3);
+    c4arrpush(arr, 2);
+    c4arrpush(arr, 3);
+
+    assert(c4arrlen(arr) == 3 && "incorrect arr len");
+    assert(c4arrcap(arr) == 4 && "incorrect arr cap");
+
+    assert(c4arrpop(arr) == 3);
+    assert(c4arrlen(arr) == 2 && "incorrect arr len");
+    assert(c4arrcap(arr) == 4 && "incorrect arr cap");
+    
+    c4arrfree(arr);
+}
+
 void test_arr_push() {
     int *arr = NULL;
 
@@ -196,6 +213,7 @@ void test_arr_push() {
 
 int main() {
     c4runtest(test_arr_push);
+    c4runtest(test_arr_pop);
     c4runtest(test_arr_diff_types);
     c4runtest(test_arg_1);
     c4runtest(test_arg_2);

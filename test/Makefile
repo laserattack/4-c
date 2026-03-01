@@ -10,6 +10,9 @@ LIBS            =
 
 all: $(PROGRAM_BIN)
 
+valgrind: $(PROGRAM_BIN)
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(PROGRAM_BIN)
+
 $(PROGRAM_BIN): $(OBJECTS)
 	$(CC) $(LDFLAGS) -o $(PROGRAM_BIN) $(OBJECTS) $(LIBS)
 
@@ -18,8 +21,5 @@ $(PROGRAM_BIN): $(OBJECTS)
 
 clean:
 	rm -f $(PROGRAM_BIN) $(OBJECTS)
-
-valgrind:
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(PROGRAM_BIN)
 
 .PHONY: all clean valgrind
