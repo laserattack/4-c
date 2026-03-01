@@ -7,8 +7,8 @@
 #define C4_ARR_INIT_CAP 1
 
 typedef struct {
-    int cap;
-    int len;
+    size_t cap;
+    size_t len;
 } C4ArrHeader;
 
 #define c4arrheader(arr) ((arr)? (C4ArrHeader *)((void *)(arr) - sizeof(C4ArrHeader)): NULL)
@@ -58,19 +58,21 @@ typedef struct {
 #define c4arrinsert(arr, idx, el)                                                 \
     do {                                                                          \
         if (!(arr)) break;                                                        \
-        if ((idx) <= c4arrlen(arr) && (idx) >= 0) {                               \
+        size_t idx_ = (idx);                                                      \
+        if (idx_ <= c4arrlen(arr)) {                                              \
             c4arrpush(arr, el);                                                   \
-            for (int i_ = c4arrlen(arr) - 1; i_ > (idx); i_--)                    \
+            for (size_t i_ = c4arrlen(arr) - 1; i_ > idx_; i_--)                  \
                 (arr)[i_] = (arr)[i_ - 1];                                        \
-            (arr)[idx] = el;                                                      \
+            (arr)[idx_] = el;                                                     \
         }                                                                         \
     } while(0)
 
 #define c4arrremove(arr, idx)                                                     \
     do {                                                                          \
         if (!(arr)) break;                                                        \
-        if ((idx) < c4arrlen(arr) && (idx) >= 0) {                                \
-            for (int i_ = (idx); i_ < c4arrlen(arr) - 1; i_++)                    \
+        size_t idx_ = (idx);                                                      \
+        if (idx_ < c4arrlen(arr)) {                                               \
+            for (size_t i_ = idx_; i_ < c4arrlen(arr) - 1; i_++)                  \
                 (arr)[i_] = (arr)[i_ + 1];                                        \
             c4arrheader(arr)->len--;                                              \
         }                                                                         \
