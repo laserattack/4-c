@@ -30,29 +30,29 @@ typedef struct {
 
 #define c4arrpush(arr, el)                                                        \
     do {                                                                          \
-        C4ArrHeader *_h;                                                          \
+        C4ArrHeader *h_;                                                          \
         if (!(arr)) {                                                             \
-            _h = malloc(sizeof(C4ArrHeader) + C4_ARR_INIT_CAP * sizeof(*(arr)));  \
-            if (!_h) {                                                            \
+            h_ = malloc(sizeof(C4ArrHeader) + C4_ARR_INIT_CAP * sizeof(*(arr)));  \
+            if (!h_) {                                                            \
                 fprintf(stderr, "c4arr alloc err\n");                             \
                 exit(1);                                                          \
             }                                                                     \
-            _h->cap = C4_ARR_INIT_CAP;                                            \
-            _h->len = 0;                                                          \
-            (arr) = (void *)_h + sizeof(C4ArrHeader);                             \
+            h_->cap = C4_ARR_INIT_CAP;                                            \
+            h_->len = 0;                                                          \
+            (arr) = (void *)h_ + sizeof(C4ArrHeader);                             \
         }                                                                         \
-        _h = c4arrheader(arr);                                                    \
-        _h->len++;                                                                \
-        if (_h->len > _h->cap) {                                                  \
-            _h->cap *= 2;                                                         \
-            _h = realloc(_h, sizeof(C4ArrHeader) + _h->cap * sizeof(*(arr)));     \
-            if (!_h) {                                                            \
+        h_ = c4arrheader(arr);                                                    \
+        h_->len++;                                                                \
+        if (h_->len > h_->cap) {                                                  \
+            h_->cap *= 2;                                                         \
+            h_ = realloc(h_, sizeof(C4ArrHeader) + h_->cap * sizeof(*(arr)));     \
+            if (!h_) {                                                            \
                 fprintf(stderr, "c4arr realloc err\n");                           \
                 exit(1);                                                          \
             }                                                                     \
-            (arr) = (void *)_h + sizeof(C4ArrHeader);                             \
+            (arr) = (void *)h_ + sizeof(C4ArrHeader);                             \
         }                                                                         \
-        (arr)[_h->len-1] = el;                                                    \
+        (arr)[h_->len-1] = el;                                                    \
     } while(0)
 
 #define c4arrinsert(arr, idx, el)                                                 \
@@ -60,8 +60,8 @@ typedef struct {
         if (!(arr)) break;                                                        \
         if ((idx) <= c4arrlen(arr) && (idx) >= 0) {                               \
             c4arrpush(arr, el);                                                   \
-            for (int _i = c4arrlen(arr) - 1; _i > (idx); _i--)                    \
-                (arr)[_i] = (arr)[_i - 1];                                        \
+            for (int i_ = c4arrlen(arr) - 1; i_ > (idx); i_--)                    \
+                (arr)[i_] = (arr)[i_ - 1];                                        \
             (arr)[idx] = el;                                                      \
         }                                                                         \
     } while(0)
@@ -70,8 +70,8 @@ typedef struct {
     do {                                                                          \
         if (!(arr)) break;                                                        \
         if ((idx) < c4arrlen(arr) && (idx) >= 0) {                                \
-            for (int _i = (idx); _i < c4arrlen(arr) - 1; _i++)                    \
-                (arr)[_i] = (arr)[_i + 1];                                        \
+            for (int i_ = (idx); i_ < c4arrlen(arr) - 1; i_++)                    \
+                (arr)[i_] = (arr)[i_ + 1];                                        \
             c4arrheader(arr)->len--;                                              \
         }                                                                         \
     } while(0)
@@ -79,18 +79,18 @@ typedef struct {
 #define c4arrshrink(arr)                                                          \
     do {                                                                          \
         if (!(arr)) break;                                                        \
-        C4ArrHeader *_h;                                                          \
-        _h = c4arrheader(arr);                                                    \
-        _h->cap = _h->len;                                                        \
-        if (!_h->cap) {                                                           \
+        C4ArrHeader *h_;                                                          \
+        h_ = c4arrheader(arr);                                                    \
+        h_->cap = h_->len;                                                        \
+        if (!h_->cap) {                                                           \
             c4arrfree(arr);                                                       \
         } else {                                                                  \
-            _h = realloc(_h, sizeof(C4ArrHeader) + _h->cap * sizeof(*(arr)));     \
-            if (!_h) {                                                            \
+            h_ = realloc(h_, sizeof(C4ArrHeader) + h_->cap * sizeof(*(arr)));     \
+            if (!h_) {                                                            \
                 fprintf(stderr, "c4arr realloc err\n");                           \
                 exit(1);                                                          \
             }                                                                     \
-            (arr) = (void *)_h + sizeof(C4ArrHeader);                             \
+            (arr) = (void *)h_ + sizeof(C4ArrHeader);                             \
         }                                                                         \
     } while(0)
 
