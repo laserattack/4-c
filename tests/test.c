@@ -8,20 +8,79 @@
 
 // ================ TEST ARG PARSER ================
 
-void test_arg() {
-    int argc = 4;
-    char **argv = (char *[]){"./program", "-a", "-b", "-c", NULL};
+void test_arg_3() {
+    int argc = 2;
+    char **argv = (char *[]){"./program", "-abc", NULL};
     char *c4argv0;
 
     int res = 0;
     c4argbegin {
         case 'c':
+            assert(c4argc() == 'c');
             res += 2;
             break;
         case 'b':
+            assert(c4argc() == 'b');
             res += 3;
             break;
         case 'a':
+            assert(c4argc() == 'a');
+            res += 5;
+            break;
+    } c4argend;
+
+    assert(res == 10);
+    assert(argc == 0);
+    assert(!strcmp(c4argv0, "./program"));
+}
+
+void test_arg_2() {
+    int argc = 4;
+    char **argv = (char *[]){"./program", "-aargument_optional", "-bargument_required", "-c", NULL};
+    char *c4argv0;
+
+    int res = 0;
+    c4argbegin {
+        case 'c':
+            assert(c4argc() == 'c');
+            res += 2;
+            break;
+        case 'b':
+            assert(c4argc() == 'b');
+            assert(!strcmp(c4eargf(NULL), "argument_required"));
+            res += 3;
+            break;
+        case 'a':
+            assert(c4argc() == 'a');
+            assert(!strcmp(c4argf(), "argument_optional"));
+            res += 5;
+            break;
+    } c4argend;
+
+    assert(res == 10);
+    assert(argc == 0);
+    assert(!strcmp(c4argv0, "./program"));
+}
+
+void test_arg_1() {
+    int argc = 6;
+    char **argv = (char *[]){"./program", "-a", "argument_optional", "-b", "argument_required", "-c", NULL};
+    char *c4argv0;
+
+    int res = 0;
+    c4argbegin {
+        case 'c':
+            assert(c4argc() == 'c');
+            res += 2;
+            break;
+        case 'b':
+            assert(c4argc() == 'b');
+            assert(!strcmp(c4eargf(NULL), "argument_required"));
+            res += 3;
+            break;
+        case 'a':
+            assert(c4argc() == 'a');
+            assert(!strcmp(c4argf(), "argument_optional"));
             res += 5;
             break;
     } c4argend;
@@ -76,6 +135,8 @@ void test_arr_push() {
 int main() {
     c4runtest(test_arr_push);
     c4runtest(test_arr_diff_types);
-    c4runtest(test_arg);
+    c4runtest(test_arg_1);
+    c4runtest(test_arg_2);
+    c4runtest(test_arg_3);
     return 0;
 }
