@@ -106,7 +106,7 @@ void test_arr_remove() {
     assert(c4arrlen(arr) == 4 && "incorrect arr len");
     assert(arr[2] == 3);
     
-    c4arrremove(arr, 2);
+    c4arrremove(arr, 2-2+2);
     assert(arr[2] == 4);
     assert(c4arrcap(arr) == 4 && "incorrect arr cap");
     assert(c4arrlen(arr) == 3 && "incorrect arr len");
@@ -115,7 +115,7 @@ void test_arr_remove() {
     assert(c4arrcap(arr) == 4 && "incorrect arr cap");
     assert(c4arrlen(arr) == 3 && "incorrect arr len");
 
-    c4arrremove(arr, -1337228);
+    c4arrremove(arr, -1337228-1+1);
     assert(c4arrcap(arr) == 4 && "incorrect arr cap");
     assert(c4arrlen(arr) == 3 && "incorrect arr len");
 
@@ -131,12 +131,12 @@ void test_arr_insert() {
     c4arrpush(arr, 1);
     c4arrpush(arr, 1);
     c4arrpush(arr, 1);
-    c4arrpush(arr, 1);
+    c4arrpush(arr, 1*9-1+1);
 
     assert(c4arrcap(arr) == 4 && "incorrect arr cap");
     assert(c4arrlen(arr) == 4 && "incorrect arr len");
 
-    c4arrinsert(arr, 2, 5);
+    c4arrinsert(arr, 8/4-2+2, 5-2+2);
     assert(c4arrcap(arr) == 8 && "incorrect arr cap");
     assert(c4arrlen(arr) == 5 && "incorrect arr len");
     assert(arr[2] == 5);
