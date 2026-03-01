@@ -14,7 +14,20 @@ typedef struct {
 #define c4arrheader(arr) (C4ArrHeader *)((void *)(arr) - sizeof(C4ArrHeader))
 #define c4arrlen(arr) (c4arrheader(arr))->len
 #define c4arrcap(arr) (c4arrheader(arr))->cap
-#define c4arrfree(arr) ((arr)? free(c4arrheader(arr)): (void)0)
+
+#define c4arrfree(arr)                                                         \
+    do {                                                                       \
+        if (!arr) break;                                                       \
+        free(c4arrheader(arr));                                                \
+        (arr) = NULL;                                                          \
+    } while(0)
+
+#define c4arrclear(arr)                                                        \
+    do {                                                                       \
+        if (!arr) break;                                                       \
+        (c4arrheader(arr))->len = 0;                                           \
+    } while(0)
+
 #define c4arrpush(arr, el)                                                     \
     do {                                                                       \
         C4ArrHeader *h;                                                        \
@@ -44,8 +57,8 @@ typedef struct {
 
 #define c4arrshrink(arr)                                                       \
     do {                                                                       \
-        C4ArrHeader *h;                                                        \
         if (!arr) break;                                                       \
+        C4ArrHeader *h;                                                        \
         h = c4arrheader(arr);                                                  \
         h->cap = h->len;                                                       \
         h = realloc(h, sizeof(C4ArrHeader) + h->cap * sizeof(*arr));           \
