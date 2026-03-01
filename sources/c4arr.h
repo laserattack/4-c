@@ -82,12 +82,16 @@ typedef struct {
         C4ArrHeader *h;                                                          \
         h = c4arrheader(arr);                                                    \
         h->cap = h->len;                                                         \
-        h = realloc(h, sizeof(C4ArrHeader) + h->cap * sizeof(*(arr)));           \
-        if (!h) {                                                                \
-            fprintf(stderr, "c4arr realloc err\n");                              \
-            exit(1);                                                             \
+        if (!h->cap) {                                                           \
+            c4arrfree(arr);                                                      \
+        } else {                                                                 \
+            h = realloc(h, sizeof(C4ArrHeader) + h->cap * sizeof(*(arr)));       \
+            if (!h) {                                                            \
+                fprintf(stderr, "c4arr realloc err\n");                          \
+                exit(1);                                                         \
+            }                                                                    \
+            (arr) = (void *)h + sizeof(C4ArrHeader);                             \
         }                                                                        \
-        (arr) = (void *)h + sizeof(C4ArrHeader);                                 \
     } while(0)
 
 #endif

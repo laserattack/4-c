@@ -159,24 +159,27 @@ void test_arr_insert() {
 
 void test_arr_clear_shrink() {
     int *arr = NULL;
-    c4arrpush(arr, 1);
-    c4arrpush(arr, 1);
-    c4arrpush(arr, 1);
-    c4arrpush(arr, 1);
-    c4arrpush(arr, 1);
 
-    assert(c4arrcap(arr) == 8 && "incorrect arr cap");
-    assert(c4arrlen(arr) == 5 && "incorrect arr len");
+    for (int i = 0; i < 10; ++i) {
+        c4arrpush(arr, 1);
+        c4arrpush(arr, 1);
+        c4arrpush(arr, 1);
+        c4arrpush(arr, 1);
+        c4arrpush(arr, 1);
+        
+        assert(c4arrcap(arr) == 8 && "incorrect arr cap");
+        assert(c4arrlen(arr) == 5 && "incorrect arr len");
 
-    c4arrclear(arr);
+        c4arrclear(arr);
 
-    assert(c4arrcap(arr) == 8 && "incorrect arr cap");
-    assert(c4arrlen(arr) == 0 && "incorrect arr len");
+        assert(c4arrcap(arr) == 8 && "incorrect arr cap");
+        assert(c4arrlen(arr) == 0 && "incorrect arr len");
 
-    c4arrshrink(arr);
+        c4arrshrink(arr);
 
-    assert(c4arrcap(arr) == 0 && "incorrect arr cap");
-    assert(c4arrlen(arr) == 0 && "incorrect arr len");
+        assert(c4arrcap(arr) == 0 && "incorrect arr cap");
+        assert(c4arrlen(arr) == 0 && "incorrect arr len");
+    }
     
     c4arrfree(arr);
 }
